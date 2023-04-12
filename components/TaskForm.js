@@ -20,10 +20,12 @@ const TaskForm = () => {
   const tasks = useSelector((state) => state.tasks);
 
   const handleChange = (e) => {
-    setTask({
-      ...task,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value, type } = e.target;
+
+    const newValue = type === "radio" ? e.target.checked : value;
+
+    setTask({ ...task, [name]: newValue });
+    console.log(newValue);
   };
 
   const handleSubmit = (e) => {
@@ -43,10 +45,13 @@ const TaskForm = () => {
   };
 
   useEffect(() => {
+    if(task.length === 0) {
+        push('/')
+    }
     if (query.id) {
       setTask(tasks.find((task) => task.id === query.id));
     }
-  }, [query.id, tasks]);
+  }, [push, query.id, task.length, tasks]);
 
   return (
     <form
@@ -72,20 +77,26 @@ const TaskForm = () => {
           value={task.description}
         ></textarea>
         {query.id ? (
-          <div className="flex gap-3">
-            <div className="flex gap-2">
-              <label htmlFor="incompleted">Incompleted</label>
-              <input
-                type="radio"
-                checked={task.completed}
-                name="incompleted"
-                id="incompleted"
-              />
-            </div>
-          </div>
+          <div className="flex gap-2">
+          <input
+            id="published"
+            className="peer/published"
+            type="radio"
+            name="completed"
+            value={task.completed}
+            checked={task.completed === true}
+            onChange={handleChange}
+          />
+          <label
+            htmlFor="published"
+            className="peer-checked/published:text-sky-500"
+          >
+            {task.completed === false ? 'Incomplete' : 'Complete'}
+          </label>
+        </div>
         ) : null}
       </div>
-      <button className="mt-3 w-full bg-black px-7 rounded-lg py-2 text-white">
+      <button disabled={!task.title || !task.description} className="mt-3 w-full bg-black px-7 rounded-lg py-2 text-white">
         Save
       </button>
     </form>
