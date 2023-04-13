@@ -25,7 +25,6 @@ const TaskForm = () => {
     const newValue = type === "radio" ? e.target.checked : value;
 
     setTask({ ...task, [name]: newValue });
-    console.log(newValue);
   };
 
   const handleSubmit = (e) => {
