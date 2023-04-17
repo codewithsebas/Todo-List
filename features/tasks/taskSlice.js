@@ -15,6 +15,11 @@ export const taskSlice = createSlice({
             state.splice((state.indexOf), 1)
         }
     },
+    deleteTaskAll: (state, action) => {
+      while(state.length > 0) {
+        state.splice(0, 1);
+      }
+    },
     updateTask: (state, action) => {
         const {id, title, description, completed} = action.payload
         const foundTask = state.find(task => task.id === id)
@@ -28,5 +33,5 @@ export const taskSlice = createSlice({
   },
 });
 
-export const { addTask, deleteTask, updateTask } = taskSlice.actions;
+export const { addTask, deleteTask, deleteTaskAll, updateTask } = taskSlice.actions;
 export default taskSlice.reducer;
