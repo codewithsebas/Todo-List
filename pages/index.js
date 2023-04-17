@@ -5,7 +5,7 @@ import { BsPatchPlus } from "react-icons/bs";
 import { MdDeleteSweep } from "react-icons/md";
 import { useState } from "react";
 import Head from "next/head";
-import { deleteTaskAll} from "@/features/tasks/taskSlice";
+import { deleteTaskAll } from "@/features/tasks/taskSlice";
 
 const Home = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -38,8 +38,11 @@ const Home = () => {
             <BsPatchPlus className="text-xl" />
             <p>Create a new note</p>
           </button>
-          {tasks.length >= 1 && (
-            <button onClick={() => handleDeleteAll(tasks)} className="flex gap-3 items-center text-sm bg-zinc-800 text-white  font-medium px-4 rounded-md duration-200 active:bg-zinc-700">
+          {tasks?.length >= 1 && (
+            <button
+              onClick={() => handleDeleteAll(tasks)}
+              className="flex gap-3 items-center text-sm bg-zinc-800 text-white  font-medium px-4 rounded-md duration-200 active:bg-zinc-700"
+            >
               <MdDeleteSweep className="text-xl" />
               <p>Clear all</p>
             </button>
@@ -55,7 +58,7 @@ const Home = () => {
           <TaskForm setNewTask={setNewTask} />
         </div>
         <div className="w-full h-full max-w-2xl overflow-auto">
-          {tasks.length === 0 ? (
+          {tasks?.length === 0 ? (
             <p className="w-full h-full flex items-center justify-center text-lg text-black/50 font-medium">
               Create a new Note!{" "}
             </p>

@@ -1,3 +1,5 @@
+`use client`;
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "@/features/tasks/taskSlice";
@@ -44,7 +46,7 @@ const TaskForm = ({ setNewTask }) => {
       );
     }
     push("/");
-    handleReset()
+    handleReset();
   };
 
   const handleReset = () => {
@@ -56,13 +58,13 @@ const TaskForm = ({ setNewTask }) => {
   };
 
   useEffect(() => {
-    if (task.length === 0) {
+    if (tasks?.length === 0) {
       push("/");
     }
     if (query.id) {
       setTask(tasks.find((task) => task.id === query.id));
     }
-  }, [push, query.id, task.length, tasks]);
+  }, [push, query.id, tasks?.length, tasks]);
 
   return (
     <form
@@ -99,18 +101,18 @@ const TaskForm = ({ setNewTask }) => {
             value={task.description}
           ></textarea>
         </div>
-        <div className="flex gap-2">
-            <input
-              hidden
-              id="completed"
-              className="peer/published"
-              type="checkbox"
-              name="completed"
-              value={task.completed}
-              checked={task.completed}
-              onChange={handleChange}
-            />
-          
+        <div className="flex gap-2 nocopy">
+          <input
+            hidden
+            id="completed"
+            className="peer/published"
+            type="checkbox"
+            name="completed"
+            value={task.completed}
+            checked={task.completed}
+            onChange={handleChange}
+          />
+
           <label
             htmlFor="completed"
             className="text-lg font-medium flex items-center gap-2 cursor-pointer"
@@ -137,7 +139,11 @@ const TaskForm = ({ setNewTask }) => {
             disabled={!task.title || !task.description}
             onClick={() => setNewTask(false)}
             className={`flex-none items-center shadow-md text-base  font-medium py-2 px-4 rounded-md duration-200 active:shadow-lg  
-            ${!task.title || !task.description ? 'bg-zinc-400 text-white cursor-not-allowed' : 'bg-zinc-800 text-white active:border-zinc-300 active:bg-zinc-700'}`}
+            ${
+              !task.title || !task.description
+                ? "bg-zinc-400 text-white cursor-not-allowed"
+                : "bg-zinc-800 text-white active:border-zinc-300 active:bg-zinc-700"
+            }`}
           >
             {query.id ? "Update Note" : "Create Note"}
           </button>

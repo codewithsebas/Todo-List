@@ -26,13 +26,13 @@ const TasksList = ({ setNewTask }) => {
       {tasks.map((task) => (
         <div
           key={task.id}
-          className={`flex flex-col gap-3 border py-3 px-4 rounded-lg shadow ${
+          className={`flex flex-col gap-3 border py-3 px-4 rounded-lg shadow duration-500 ${
             task.completed === false ? "bg-white" : "bg-slate-100"
           }`}
         >
-          <div className="flex flex-col gap-3">
+          <div className="flex justify-between gap-3">
             <div
-              className={`w-full h-full ${
+              className={`w-full h-full duration-500 ${
                 task.completed === false ? "no-underline" : "line-through"
               }`}
             >
@@ -58,7 +58,7 @@ const TasksList = ({ setNewTask }) => {
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-3 text-2xl">
+            <div className="flex items-center gap-3 text-2xl nocopy">
               {task.completed === false ? (
                 <button
                   onClick={() => {
