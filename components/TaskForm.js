@@ -93,7 +93,7 @@ const TaskForm = ({ setNewTask }) => {
             className="outline-none font-base font-medium border py-2 px-3 rounded-md w-full h-20 duration-200 focus:border-sky-200 placeholder:font-normal"
             name="description"
             onChange={handleChange}
-            placeholder="Description"
+            placeholder="Your Description"
             maxLength="300"
             cols="10"
             value={task.description}

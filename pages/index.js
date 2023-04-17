@@ -22,7 +22,7 @@ const Home = () => {
         <title>Notes App!</title>
       </Head>
       <main className="bg-[#fdfdfd] w-full h-screen flex flex-col gap-5 justify-start items-center px-4">
-        <nav className="w-full max-w-2xl mt-12">
+        <nav className="w-full max-w-2xl mt-10">
           <h1 className="font-semibold text-3xl">
             Hello and welcome to this Notes App
           </h1>
@@ -54,7 +54,7 @@ const Home = () => {
         >
           <TaskForm setNewTask={setNewTask} />
         </div>
-        <div className="w-full h-full max-w-2xl mb-12 overflow-auto">
+        <div className="w-full h-full max-w-2xl overflow-auto">
           {tasks.length === 0 ? (
             <p className="w-full h-full flex items-center justify-center text-lg text-black/50 font-medium">
               Create a new Note!{" "}
