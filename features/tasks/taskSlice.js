@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postData } from "../actions/postData";
-import axios from "axios";
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -11,11 +9,9 @@ export const taskSlice = createSlice({
     },
     addTask: (state, action) => {
       state.push(action.payload);
-      const taskCreated = action.payload;
-      postData(taskCreated);
     },
     deleteTask: (state, action) => {
-      const taskFound = state.find((task) => task._id == action.payload);
+      const taskFound = state.find((task) => task.id == action.payload);
       if (taskFound) {
         const index = state.indexOf(taskFound);
         state.splice(index, 1);
@@ -27,8 +23,8 @@ export const taskSlice = createSlice({
       }
     },
     updateTask: (state, action) => {
-      const { _id, title, description, completed } = action.payload;
-      const foundTask = state.find((task) => task._id === id);
+      const { id, title, description, completed } = action.payload;
+      const foundTask = state.find((task) => task.id === id);
 
       if (foundTask) {
         foundTask.title = title;
@@ -41,16 +37,5 @@ export const taskSlice = createSlice({
 
 export const { setTasks, addTask, deleteTask, deleteTaskAll, updateTask } =
   taskSlice.actions;
-
-export const fetchTasks = () => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get("http://localhost:5000/"); // Aquí debes colocar la URL de tu servidor
-      dispatch(setTasks(response.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
 
 export default taskSlice.reducer;

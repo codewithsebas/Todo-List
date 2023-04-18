@@ -5,7 +5,7 @@ import { BsPatchPlus } from "react-icons/bs";
 import { MdDeleteSweep } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { deleteTaskAll, fetchTasks } from "@/features/tasks/taskSlice";
+import { deleteTaskAll } from "@/features/tasks/taskSlice";
 
 const Home = () => {
   const [newTask, setNewTask] = useState(false);
@@ -16,10 +16,6 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
-
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
   return (
     <>
       <Head>

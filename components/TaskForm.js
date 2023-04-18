@@ -82,6 +82,10 @@ const TaskForm = ({ setNewTask, props }) => {
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  })
+
   return (
     <form
       onSubmit={handleSubmit}
