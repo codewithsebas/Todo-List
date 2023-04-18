@@ -1,13 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTask, updateTask } from "@/features/tasks/taskSlice";
+import {
+  viewTasks,
+  deleteTask,
+  updateTask,
+  fetchTasks,
+} from "@/features/tasks/taskSlice";
 import { useRouter } from "next/router";
 import { TbEditCircle, TbEditCircleOff } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { BsPatchCheckFill } from "react-icons/bs";
+import { useEffect } from "react";
 
 const TasksList = ({ setNewTask }) => {
   const { push } = useRouter();
-  const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteTask(id));
@@ -19,13 +24,18 @@ const TasksList = ({ setNewTask }) => {
     dispatch(updateTask(id));
   };
 
+  const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   return (
     <div className="w-full h-full max-w-2xl flex flex-col gap-3 pr-2">
       {tasks.map((task) => (
         <div
-          key={task.id}
+          key={task._id}
           className={`flex flex-col gap-3 border py-3 px-4 rounded-lg shadow duration-500 ${
             task.completed === false ? "bg-white" : "bg-slate-100"
           }`}
@@ -38,6 +48,9 @@ const TasksList = ({ setNewTask }) => {
             >
               <h1 className="text-lg font-medium">{task.title}</h1>
               <p className="text-[#797979]">{task.description}</p>
+            </div>
+            <div className="text-[#797979]">
+              {task.date}
             </div>
           </div>
           <div className="flex justify-between gap-3 w-full">
@@ -65,7 +78,7 @@ const TasksList = ({ setNewTask }) => {
                     setNewTask(true);
                     handleUpdate(task.id);
                   }}
-                  className="rounded-md text-zinc-600 active:text-zinc-800 hover:text-zinc-500 duration-200"
+                  className="rounded-md outline-none text-zinc-600 active:text-zinc-800 hover:text-zinc-500 duration-200"
                 >
                   <TbEditCircle />
                 </button>

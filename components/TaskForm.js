@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "@/features/tasks/taskSlice";
-import { v4 as uuid } from "uuid";
 import { useEffect } from "react";
+import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import { VscClose } from "react-icons/vsc";
 import { TbCircleCheck, TbCircleCheckFilled } from "react-icons/tb";
 import { RxReset } from "react-icons/rx";
 
-const TaskForm = ({ setNewTask }) => {
+const TaskForm = ({ setNewTask, props }) => {
   // Function query /id/ Task
   const { push, query } = useRouter();
 
@@ -65,6 +65,22 @@ const TaskForm = ({ setNewTask }) => {
       setTask(tasks.find((task) => task.id === query.id));
     }
   }, [push, query.id, tasks?.length, tasks]);
+
+  // Function esc keydown
+  useEffect(() => {
+    function handleEscClose(event) {
+      if (event.keyCode === 27) {
+        push("/");
+        setNewTask(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, []);
 
   return (
     <form
@@ -150,13 +166,14 @@ const TaskForm = ({ setNewTask }) => {
         </div>
       </div>
       <button
-        className="absolute right-4 top-4 text-xl"
+        className="absolute right-4 top-4 text-xl flex items-center gap-2"
         onClick={() => {
           setNewTask(false);
           push("/");
         }}
         type="button"
       >
+        <p className="text-sm bg-black/5 px-3 py-1 rounded-md text-black/80">Esc</p>
         <VscClose />
       </button>
     </form>

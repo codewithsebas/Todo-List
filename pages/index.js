@@ -3,19 +3,23 @@ import TasksList from "@/components/TasksList";
 import { useDispatch, useSelector } from "react-redux";
 import { BsPatchPlus } from "react-icons/bs";
 import { MdDeleteSweep } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
-import { deleteTaskAll } from "@/features/tasks/taskSlice";
+import { deleteTaskAll, fetchTasks } from "@/features/tasks/taskSlice";
 
 const Home = () => {
-  const tasks = useSelector((state) => state.tasks);
   const [newTask, setNewTask] = useState(false);
-
-  const dispatch = useDispatch();
 
   const handleDeleteAll = () => {
     dispatch(deleteTaskAll());
   };
+
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks);
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
   return (
     <>
       <Head>
@@ -33,7 +37,7 @@ const Home = () => {
         <div className="w-full flex justify-between max-w-2xl pr-2">
           <button
             onClick={() => setNewTask(!newTask)}
-            className="bg-white flex gap-3 items-center shadow-md text-base text-zinc-800  font-medium py-2 px-4 rounded-lg duration-200 active:shadow-lg active:border-zinc-300 border"
+            className="bg-white flex gap-3 outline-none items-center shadow-md text-base text-zinc-800  font-medium py-2 px-4 rounded-lg duration-200 active:shadow-lg active:border-zinc-300 border"
           >
             <BsPatchPlus className="text-xl" />
             <p>Create a new note</p>
